@@ -1,0 +1,17 @@
+---
+- name: Angular Development Configuration
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Install tools
+      dnf:
+        name:
+          - npm
+        state: present
+
+    - name: Install yarn
+      npm:
+        name: yarn
+        state: present
+        global: yes

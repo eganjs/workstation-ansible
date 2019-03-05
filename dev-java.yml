@@ -1,0 +1,28 @@
+---
+- name: Java Development Configuration
+  hosts: localhost
+  become: true
+
+  roles:
+    - name: Install and configure Java 8
+      role: java
+      java_version: '8'
+      java_vendor: adoptopenjdk
+      java_is_default_installation: no
+      java_fact_group_name: java_8
+
+    - name: Install and configure Java 11
+      role: java
+      java_version: '11'
+      java_vendor: adoptopenjdk
+      java_is_default_installation: yes
+      java_fact_group_name: java
+
+    - name: Install and configure maven
+      role: maven
+
+    - name: Install and configure maven color extension
+      role: maven-color
+
+    - name: Install and configure maven notifier extension
+      role: maven-notifier

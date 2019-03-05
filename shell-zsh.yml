@@ -1,0 +1,38 @@
+---
+- name: Zsh Configuration
+  hosts: localhost
+
+  vars:
+    user: mintdev
+
+  tasks:
+    - name: Install zsh
+      become: true
+      dnf:
+        name:
+          - xclip
+          - zsh
+        state: present
+
+  roles:
+    - name: Install and configure oh-my-zsh
+      role: oh-my-zsh
+      users:
+        - username: "{{ user }}"
+          oh_my_zsh:
+            theme: robbyrussell
+            plugins:
+              - copyfile
+              - dnf
+              - docker
+              - git
+              - git-extras
+              - gradle
+              - mvn
+              - ng
+              - sudo
+              - systemd
+              - tig
+              - yarn
+              - yum
+              - z

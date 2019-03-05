@@ -1,0 +1,30 @@
+---
+- name: Package Configuration
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Install dnf
+      yum:
+        name:
+          - dnf
+          - dnf-plugins-core
+        state: present
+
+    - name: Install epel repository
+      dnf:
+        name: epel-release
+        state: present
+
+    - name: Install tools
+      dnf:
+        name:
+          - tmux
+          - tree
+          - vim
+        state: present
+
+    - name: Uninstall nano
+      dnf:
+        name: nano
+        state: absent

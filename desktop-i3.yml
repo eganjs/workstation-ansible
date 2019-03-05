@@ -1,0 +1,22 @@
+---
+- name: i3 Configuration
+  hosts: localhost
+
+  vars:
+    user: mintdev
+
+  tasks:
+    - name: Install i3
+      become: true
+      dnf:
+        name:
+          - i3
+        state: present
+
+    - name: Configure i3
+      copy:
+        src: vars/i3.vmware.config
+        dest: "/home/{{ user }}/.config/i3/config"
+        owner: "{{ user }}"
+        group: "{{ user }}" 
+        mode: 0441
