@@ -1,0 +1,19 @@
+---
+- name: Install Roles
+  hosts: localhost
+
+  tasks:
+    - name: Roles Directory Is Absent
+      file:
+        path: roles
+        state: absent
+
+    - name: Install Roles
+      local_action: command ansible-galaxy install -r requirements.yml --roles-path roles
+
+    - name: Roles Directory Is In .gitignore
+      lineinfile:
+        dest: .gitignore
+        regexp: '^\/roles$'
+        line: '/roles'
+        state: present
