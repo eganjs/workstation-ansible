@@ -7,7 +7,7 @@
     user_email: joseph.s.egan@gmail.com
 
   tasks:
-    - name: git tools
+    - name: Install git tools
       become: true
       dnf:
         name:
@@ -18,18 +18,56 @@
           - tig
         state: present
 
-    - name: global git config
+    - name: Enable git colors
       git_config:
-        name: "{{ item.key }}"
+        name: color.ui
         scope: global
-        value: "{{ item.value }}"
-      with_items:
-        - { key: "color.ui", value: "auto" }
-        - { key: "user.name", value: "{{ user_name }}" }
-        - { key: "user.email", value: "{{ user_email }}" }
-        - { key: "alias.gl", value: "log --graph --decorate --format=oneline --all" }
-        - { key: "alias.ap", value: "add --patch" }
-        - { key: "alias.ca", value: "commit --amend" }
-        - { key: "alias.cne", value: "commit --amend --no-edit" }
-        - { key: "alias.fa", value: "fetch --all --prune" }
-        - { key: "alias.ff", value: "merge --ff-only" }
+        value: auto
+
+    - name: Set git user.name
+      git_config:
+        name: user.name
+        scope: global
+        value: "{{ user_name }}"
+
+    - name: Set git user.email
+      git_config:
+        name: user.email
+        scope: global
+        value: "{{ user_email }}"
+
+    - name: Add gl (graph log) alias
+      git_config:
+        name: alias.gl
+        scope: global
+        value: log --graph --decorate --format=oneline --all
+
+    - name: Add ap (add patch) alias
+      git_config:
+        name: alias.ap
+        scope: global
+        value: add --patch
+
+    - name: Add ca (commit amend) alias
+      git_config:
+        name: alias.ca
+        scope: global
+        value: commit --amend
+
+    - name: Add cne (commit no edit) alias
+      git_config:
+        name: alias.cne
+        scope: global
+        value: commit --amend --no-edit
+
+    - name: Add fa (fetch all) alias
+      git_config:
+        name: alias.fa
+        scope: global
+        value: fetch --all --prune
+
+    - name: Add ff (fast forward) alias
+      git_config:
+        name: alias.ff
+        scope: global
+        value: merge --ff-only
