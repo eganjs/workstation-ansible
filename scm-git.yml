@@ -2,10 +2,6 @@
 - name: Git Configuration
   hosts: localhost
 
-  vars:
-    user_name: Joseph Egan
-    user_email: joseph.s.egan@gmail.com
-
   tasks:
     - name: git tools
       become: true
@@ -25,8 +21,8 @@
         value: "{{ item.value }}"
       with_items:
         - { key: "color.ui", value: "auto" }
-        - { key: "user.name", value: "{{ user_name }}" }
-        - { key: "user.email", value: "{{ user_email }}" }
+        - { key: "user.name", value: "{{ user.name }}" }
+        - { key: "user.email", value: "{{ user.email }}" }
         - { key: "alias.gl", value: "log --graph --decorate --format=oneline --all" }
         - { key: "alias.ap", value: "add --patch" }
         - { key: "alias.ca", value: "commit --amend" }
