@@ -2,9 +2,6 @@
 - name: Zsh Configuration
   hosts: localhost
 
-  vars:
-    user: mintdev
-
   tasks:
     - name: Install zsh
       become: true
@@ -18,7 +15,7 @@
     - name: Install and configure oh-my-zsh
       role: oh-my-zsh
       users:
-        - username: "{{ user }}"
+        - username: "{{ user.account }}"
           oh_my_zsh:
             theme: robbyrussell
             plugins:
