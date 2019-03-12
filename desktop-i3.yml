@@ -3,20 +3,25 @@
   hosts: localhost
 
   vars:
-    user: mintdev
+    i3_config_dir: "/home/{{ user.account }}/.config/i3"
 
   tasks:
-    - name: Install i3
+    - name: i3
       become: true
       dnf:
         name:
           - i3
         state: present
 
-    - name: Configure i3
+    - name: i3 config directory
+      file:
+        path: "{{ i3_config_dir }}"
+        state: directory
+
+    - name: i3 config
       copy:
-        src: vars/i3.vmware.config
-        dest: "/home/{{ user }}/.config/i3/config"
-        owner: "{{ user }}"
-        group: "{{ user }}" 
+        src: files/i3.vmware.config
+        dest: "{{ i3_config_dir }}/config"
+        owner: "{{ user.account }}"
+        group: "{{ user.account }}"
         mode: 0664
