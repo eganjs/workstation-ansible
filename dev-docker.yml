@@ -1,0 +1,33 @@
+---
+- name: Docker Development Configuration
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: old docker
+      dnf:
+        name:
+          - docker
+          - docker-client
+          - docker-client-latest
+          - docker-common
+          - docker-latest
+          - docker-latest-logrotate
+          - docker-logrotate
+          - docker-engine
+        state: absent
+
+    - name: docker repository
+      get_url:
+        url: "https://download.docker.com/linux/centos/docker-ce.repo"
+        checksum: sha256:6650718e0fe5202ae7618521f695d43a8bc051c539d7570f0edbfa5b4916f218
+        dest: "/etc/yum.repos.d/docker-ce.repo"
+        mode: 0664
+
+    - name: docker-ce
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present

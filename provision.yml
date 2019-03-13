@@ -5,6 +5,7 @@
 
 - import_playbook: shell-zsh.yml
 
+- import_playbook: dev-docker.yml
 - import_playbook: dev-angular.yml
 - import_playbook: dev-java.yml
 
