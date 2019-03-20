@@ -31,3 +31,9 @@
           - docker-ce-cli
           - containerd.io
         state: present
+
+    - name: enable docker daemon
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
