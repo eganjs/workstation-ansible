@@ -6,17 +6,23 @@
     i3_config_dir: "/home/{{ user.account }}/.config/i3"
 
   tasks:
-    - name: i3
+    - name: i3 with lightdm and utils
       become: true
       dnf:
         name:
+          - "@X Window System"
           - i3
+          - lightdm
+          - slick-greeter
+          - firefox
         state: present
 
     - name: i3 config directory
       file:
         path: "{{ i3_config_dir }}"
         state: directory
+        owner: "{{ user.account }}"
+        group: "{{ user.account }}"
 
     - name: i3 config
       copy:
@@ -25,3 +31,13 @@
         owner: "{{ user.account }}"
         group: "{{ user.account }}"
         mode: 0664
+
+    - name: enable lightdm
+      become: true
+      systemd:
+        name: lightdm
+        enabled: yes
+
+    - name: set graphical target
+      become: true
+      command: "systemctl set-default graphical.target"
