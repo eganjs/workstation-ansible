@@ -1,11 +1,5 @@
 ---
-- src: gantsign.java
-  name: java
-- src: gantsign.maven
-  name: maven
-- src: gantsign.maven-color
-  name: maven-color
-- src: gantsign.maven-notifier
-  name: maven-notifier
+- src: comcast.sdkman
+  name: sdkman
 - src: gantsign.oh-my-zsh
   name: oh-my-zsh
