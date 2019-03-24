@@ -1,0 +1,31 @@
+---
+- name: Terminal Configuration
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: terminal
+      dnf:
+        name:
+          - rxvt-unicode
+        state: present
+
+    - name: fonts
+      dnf:
+        name:
+          - dejavu-fonts-common
+          - dejavu-sans-fonts
+          - dejavu-sans-mono-fonts
+          - dejavu-serif-fonts
+          - dejavu-lgc-sans-fonts
+          - dejavu-lgc-sans-mono-fonts
+          - dejavu-lgc-serif-fonts
+        state: present
+
+    - name: terminal config
+      copy:
+        src: files/urxvt.Xresources
+        dest: "/home/{{ user.account }}/.Xresources"
+        owner: "{{ user.account }}"
+        group: "{{ user.account }}"
+        mode: 0644
