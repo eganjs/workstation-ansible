@@ -3,8 +3,12 @@
   hosts: localhost
   become: true
 
+  vars:
+    vim_config_dir: "/home/{{ user.account }}"
+    vim_config_file: "{{ vim_config_dir }}/.vimrc"
+
   tasks:
-    - name: Install dnf
+    - name: install dnf
       yum:
         name:
           - dnf
@@ -16,7 +20,7 @@
         name: epel-release
         state: present
 
-    - name: Install tools
+    - name: install tools
       dnf:
         name:
           - tmux
@@ -24,7 +28,15 @@
           - vim
         state: present
 
-    - name: Uninstall nano
+    - name: vim config
+      copy:
+        src: files/vim.config
+        dest: "{{ vim_config_file }}"
+        owner: "{{ user.account }}"
+        group: "{{ user.account }}"
+        mode: 0664
+
+    - name: uninstall nano
       dnf:
         name: nano
         state: absent
