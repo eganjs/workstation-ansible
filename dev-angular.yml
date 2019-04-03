@@ -7,40 +7,37 @@
     node_version: "10"
 
   tasks:
-    - name: "remove yarn, nodejs and nodejs {{ node_version }} repository"
-      dnf:
-        name:
-          - yarn
-          - nodejs
-          - nodesource-release
-        state: absent
+    - name: "add nodesource {{ node_version }} repository"
+      copy:
+        src: "files/nodesource-el7-pub_{{ node_version }}.x.repo"
+        dest: "/etc/yum.repos.d/nodesource-el7.repo"
+        mode: 0664
+      notify: remove old nodejs
 
-    - name: temp directory
-      tempfile:
-        state: directory
-      register: tmp_dir
-
-    - name: "nodejs {{ node_version }} repository rpm"
-      get_url:
-        url: "https://rpm.nodesource.com/pub_{{ node_version }}.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm"
-        checksum: sha256:21087797d72a8339e8d735f252d1ecd0e03e8174c1e27a59d34c0043e0325b4b
-        dest: "{{ tmp_dir.path }}/nodesource-release-el7-1.noarch.rpm"
-
-    - name: "nodejs {{ node_version }} repository"
-      dnf:
-        name: "{{ tmp_dir.path }}/nodesource-release-el7-1.noarch.rpm"
-        state: latest
-
-    - name: yarn stable repository
+    - name: add yarn repository
       get_url:
         url: "https://dl.yarnpkg.com/rpm/yarn.repo"
         checksum: sha256:f082589ae243fdaaaec735c7cb898624f57d9f93b77e1be259955b678fcde664
         dest: "/etc/yum.repos.d/yarn.repo"
         mode: 0664
+      notify: remove old yarn
+
+    - meta: flush_handlers
 
     - name: install yarn and nodejs
       dnf:
         name:
           - yarn
           - nodejs
-        state: latest
+        state: present
+
+  handlers:
+    - name: remove old nodejs
+      dnf:
+        name: nodejs
+        state: absent
+
+    - name: remove old yarn
+      dnf:
+        name: yarn
+        state: absent

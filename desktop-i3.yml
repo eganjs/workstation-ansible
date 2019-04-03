@@ -38,6 +38,17 @@
         name: lightdm
         enabled: yes
 
+    - name: get default target
+      command: "systemctl get-default"
+      register: default_target
+      changed_when: default_target.stdout != "graphical.target"
+      notify: set graphical target
+      args:
+        warn: false
+
+  handlers:
     - name: set graphical target
       become: true
       command: "systemctl set-default graphical.target"
+      args:
+        warn: false
