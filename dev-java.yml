@@ -11,7 +11,7 @@
           - java-11-openjdk-src
           - java-11-openjdk-javadoc
           - java-11-openjdk-devel
-        state: latest
+        state: present
 
   roles:
     - name: sdkman (maven, gradle)
