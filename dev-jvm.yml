@@ -1,16 +1,28 @@
 ---
-- name: Java Development Configuration
+- name: JVM Development Configuration
   hosts: localhost
   become: true
 
   tasks:
-    - name: jdk 11
+    - name: install jdk 11
       dnf:
         name:
           - java-11-openjdk
           - java-11-openjdk-src
           - java-11-openjdk-javadoc
           - java-11-openjdk-devel
+        state: present
+
+    - name: add bazel repository
+      get_url:
+        url: "https://copr.fedorainfracloud.org/coprs/vbatts/bazel/repo/epel-7/vbatts-bazel-epel-7.repo"
+        checksum: sha256:13ca294d4781aea2aebe4e8872c02d6d7b23a02899059821b7401f8702660ccd
+        dest: "/etc/yum.repos.d/vbatts-bazel-epel-7.repo"
+        mode: 0664
+
+    - name: install bazel
+      dnf:
+        name: bazel
         state: present
 
   roles:
