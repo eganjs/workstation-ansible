@@ -7,7 +7,7 @@
     - name: terminal
       dnf:
         name:
-          - rxvt-unicode
+          - rxvt-unicode-256color
         state: present
 
     - name: fonts
