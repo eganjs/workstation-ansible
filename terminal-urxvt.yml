@@ -22,6 +22,14 @@
           - dejavu-lgc-serif-fonts
         state: present
 
+    - name: terminal info
+      copy:
+        src: /usr/share/terminfo/r/rxvt-unicode-256color
+        dest: "/home/{{ user.account }}/.terminfo/r/rxvt-unicode-256color"
+        owner: "{{ user.account }}"
+        group: "{{ user.account }}"
+        mode: 0644
+
     - name: terminal config
       copy:
         src: files/urxvt.Xresources

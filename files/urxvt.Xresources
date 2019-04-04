@@ -1,5 +1,14 @@
+! Fonts
 *.font: xft:DejaVu Sans Mono:size=12
+Emacs.font: DejaVu Sans Mono:size=12
+Emacs.fontBackend: xft
 
+Xft.hinting: true
+Xft.hintstyle: hintfull
+Xft.antialias: rgba
+Xft.rgba: rgb
+
+! urxvt
 URxvt.scrollBar:	false
 
 ! Switch between 3 hardcoded font sizes
@@ -7,6 +16,7 @@ URxvt.keysym.C-minus:	command:\033]710;xft:DejaVu Sans Mono:size=8\007
 URxvt.keysym.C-equal:	command:\033]710;xft:DejaVu Sans Mono:size=12\007
 URxvt.keysym.C-plus:	command:\033]710;xft:DejaVu Sans Mono:size=20\007
 
+! Theming
 ! Copied from https://github.com/morhetz/gruvbox-contrib
 ! hard contrast: *background: #1d2021
 ! default contrast: *background: #282828
