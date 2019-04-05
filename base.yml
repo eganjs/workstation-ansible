@@ -27,6 +27,7 @@
           - tree
           - wget
           - vim
+          - nnn
         state: present
 
     - name: vim config
